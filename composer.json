@@ -1,5 +1,5 @@
 {
-	"name": "rdewilde/yiimailer",
+	"name": "digizijn/yiimailer",
 	"description": "Yii extension for sending emails with layouts using PHPMailer",
 	"require": {
         	"php": ">=5.0.0",
