@@ -1,4 +1,4 @@
-<?php
+<?
 /**
  * YiiMailer class - wrapper for PHPMailer
  * Yii extension for sending emails using views and layouts

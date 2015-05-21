@@ -6,17 +6,17 @@
 	<tbody>
 		<tr>
             <td style="color:#4D90FE;font-size:22px;border-bottom: 2px solid #4D90FE;">
-				<?php echo CHtml::encode(Yii::app()->name); ?>
+				<?= CHtml::encode(Yii::app()->name); ?>
             </td>
 		</tr>
 		<tr>
             <td style="color:#777;font-size:16px;padding-top:5px;">
-            	<?php if(isset($data['description'])) echo $data['description'];  ?>
+            	<? if(isset($data['description'])) echo $data['description'];  ?>
             </td>
 		</tr>
 		<tr>
             <td>
-				<?php echo $content ?>
+				<?= $content ?>
             </td>
 		</tr>
 		<tr>

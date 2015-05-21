@@ -1,4 +1,4 @@
-<?php
+<?
 return array(
     'viewPath' => 'application.views.mail',
     'layoutPath' => 'application.views.layouts',

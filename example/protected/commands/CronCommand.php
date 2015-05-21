@@ -1,4 +1,4 @@
-<?php
+<?
 class CronCommand extends CConsoleCommand
 {
 	public function getHelp()
