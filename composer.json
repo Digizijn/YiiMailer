@@ -4,5 +4,11 @@
 	"require": {
         	"php": ">=5.0.0",
 		"phpmailer/phpmailer": "v5.2.6"
+	},
+
+	"autoload" : {
+		"classmap": [
+			"YiiMailer.php"
+		]
 	}
 }

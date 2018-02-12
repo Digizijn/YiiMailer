@@ -75,13 +75,13 @@ class YiiMailer extends PHPMailer {
 	 * @param array $data Data array
 	 * @param string $layout Layout name
 	 */
-	public function __construct($view='', $data=array(), $layout='')
+	public function __construct($view='', $data= [], $layout='')
 	{
 		//initialize config
-		if(isset(Yii::app()->params[self::CONFIG_PARAMS]))
-			$config=Yii::app()->params[self::CONFIG_PARAMS];
+		if(isset(EO::app()->params[self::CONFIG_PARAMS]))
+			$config=EO::app()->params[self::CONFIG_PARAMS];
 		else
-			$config=require(Yii::getPathOfAlias('application.config').DIRECTORY_SEPARATOR.self::CONFIG_FILE);
+			$config=require(EO::getPathOfAlias('application.config').DIRECTORY_SEPARATOR.self::CONFIG_FILE);
 		//set config
 		$this->setConfig($config);
 		//set view
@@ -117,6 +117,7 @@ class YiiMailer extends PHPMailer {
 		if($view!='')
 		{
 			if(!is_file($this->getViewFile($this->viewPath.'.'.$view)))
+
 				throw new CException('View "'.$view.'" not found');
 			$this->view=$view;
 		}
@@ -128,7 +129,7 @@ class YiiMailer extends PHPMailer {
 	 */
 	public function getView()
 	{
-		return $this->view;
+		return $this->viewPath.'.'.$this->view;
 	}
 	
 	/**
@@ -162,7 +163,7 @@ class YiiMailer extends PHPMailer {
 	 */
 	public function clearData()
 	{
-		$this->data=array();
+		$this->data= [];
 	}
 	
 	/**
@@ -418,16 +419,31 @@ class YiiMailer extends PHPMailer {
 	public function getViewFile($viewName)
 	{
 		//In web application, use existing method
-		if(isset(Yii::app()->controller))
-			return Yii::app()->controller->getViewFile($viewName);
+		if(isset(EO::app()->controller)) {
+			$viewFile 	= EO::app()->controller->getViewFile($viewName);
+			if (!empty($viewFile)) {
+				return $viewFile;
+			}
+		}
+
 		//resolve the view file
 		//TODO: support for themes in console applications
 		if(empty($viewName))
 			return false;
-		
-		$viewFile=Yii::getPathOfAlias($viewName);
+
+
+		$viewFile=EO::getPathOfAlias($viewName);
+		if(($theme=EO::app()->getTheme())!==null) {
+			$themeView = str_replace(EO::getPathOfAlias('vendor.digizijn'), '', $viewFile);
+			$themeView = str_replace('/views/', '/', $themeView); // FIXME Quick&dirty :)
+
+			if(is_file($theme->getViewPath().$themeView.'.php')) {
+				return EO::app()->findLocalizedFile($theme->getViewPath().$themeView.'.php');
+			}
+		}
+
 		if(is_file($viewFile.'.php'))
-			return Yii::app()->findLocalizedFile($viewFile.'.php');
+			return EO::app()->findLocalizedFile($viewFile.'.php');
 		else
 			return false;
 	}
@@ -445,8 +461,8 @@ class YiiMailer extends PHPMailer {
 		if(($viewFile=$this->getViewFile($viewName))!==false)
 		{
 			//use controller instance if available or create dummy controller for console applications
-			if(isset(Yii::app()->controller))
-				$controller=Yii::app()->controller;
+			if(isset(EO::app()->controller))
+				$controller=EO::app()->controller;
 			else
 				$controller=new CController(__CLASS__);
 
@@ -474,12 +490,12 @@ class YiiMailer extends PHPMailer {
 		if($this->layout)
 		{
 			//has layout
-			$this->MsgHTMLWithLayout($this->Body, Yii::getPathOfAlias($this->baseDirPath));
+			$this->MsgHTMLWithLayout($this->Body, EO::getPathOfAlias($this->baseDirPath));
 		}
 		else
 		{
 			//no layout
-			$this->MsgHTML($this->Body, Yii::getPathOfAlias($this->baseDirPath));
+			$this->MsgHTML($this->Body, EO::getPathOfAlias($this->baseDirPath));
 		}
 	}
 	
@@ -490,7 +506,7 @@ class YiiMailer extends PHPMailer {
 	 */
 	protected function MsgHTMLWithLayout($message, $basedir = '')
 	{
-		$this->MsgHTML($this->renderView($this->layoutPath.'.'.$this->layout, array('content'=>$message,'data'=>$this->data)), $basedir);
+		$this->MsgHTML($this->renderView($this->layoutPath.'.'.$this->layout, ['content'=>$message,'data'=>$this->data]), $basedir);
 	}
 
 	/**
@@ -530,7 +546,7 @@ class YiiMailer extends PHPMailer {
 	public function save()
 	{
 		$filename = date('YmdHis') . '_' . uniqid() . '.eml';
-		$dir = Yii::getPathOfAlias($this->savePath);
+		$dir = EO::getPathOfAlias($this->savePath);
 		//check if dir exists and is writable
 		if(!is_writable($dir))
 			throw new CException('Directory "'.$dir.'" does not exist or is not writable!');

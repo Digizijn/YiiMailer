@@ -14,13 +14,13 @@ class CronCommand extends CConsoleCommand
 		$mail = new YiiMailer;
 		//use "cron" view from views/mail
 		$mail->setView('cron');
-		$mail->setData(array('message' => $cronResult, 'name' => get_class($this), 'description' => 'Cron job', 'mailer' => $mail));
+		$mail->setData(['message' => $cronResult, 'name' => get_class($this), 'description' => 'Cron job', 'mailer' => $mail]);
 		
 		//set properties
 		$mail->setFrom('from@example.com', 'Console application');
 		$mail->setSubject($cronResult);
 		$mail->setTo('to@example.com');
-		$mail->setAttachment(Yii::getPathOfAlias('webroot.files') . '/yii-1.1.0-validator-cheatsheet.pdf');
+		$mail->setAttachment(EO::getPathOfAlias('webroot.files') . '/yii-1.1.0-validator-cheatsheet.pdf');
 		//send
 		if ($mail->send()) {
 			echo 'Mail sent successfuly';

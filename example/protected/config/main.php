@@ -1,25 +1,25 @@
 <?
 
 // uncomment the following to define a path alias
-// Yii::setPathOfAlias('local','path/to/local-folder');
+// EO::setPathOfAlias('local','path/to/local-folder');
 
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
-return array(
+return [
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'My Web Application',
 
 	// preloading 'log' component
-	'preload'=>array('log'),
+	'preload'=> ['log'],
 
 	// autoloading model and component classes
-	'import'=>array(
+	'import'=> [
 		'application.models.*',
 		'application.components.*',
 		'ext.YiiMailer.YiiMailer',
-	),
+	],
 
-	'modules'=>array(
+	'modules'=> [
 		// uncomment the following to enable the Gii tool
 		/*
 		'gii'=>array(
@@ -29,14 +29,14 @@ return array(
 			'ipFilters'=>array('127.0.0.1','::1'),
 		),
 		*/
-	),
+	],
 
 	// application components
-	'components'=>array(
-		'user'=>array(
+	'components'=> [
+		'user'=> [
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
-		),
+		],
 		// uncomment the following to enable URLs in path-format
 		/*
 		'urlManager'=>array(
@@ -48,9 +48,9 @@ return array(
 			),
 		),
 		*/
-		'db'=>array(
+		'db'=> [
 			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
-		),
+		],
 		// uncomment the following to use a MySQL database
 		/*
 		'db'=>array(
@@ -61,31 +61,31 @@ return array(
 			'charset' => 'utf8',
 		),
 		*/
-		'errorHandler'=>array(
+		'errorHandler'=> [
 			// use 'site/error' action to display errors
             'errorAction'=>'site/error',
-        ),
-		'log'=>array(
+		],
+		'log'=> [
 			'class'=>'CLogRouter',
-			'routes'=>array(
-				array(
+			'routes'=> [
+				[
 					'class'=>'CFileLogRoute',
 					'levels'=>'error, warning',
-				),
+				],
 				// uncomment the following to show log messages on web pages
 				/*
 				array(
 					'class'=>'CWebLogRoute',
 				),
 				*/
-			),
-		),
-	),
+			],
+		],
+	],
 
 	// application-level parameters that can be accessed
-	// using Yii::app()->params['paramName']
-	'params'=>array(
+	// using EO::app()->params['paramName']
+	'params'=> [
 		// this is used in contact page
 		'adminEmail'=>'webmaster@example.com',
-	),
-);
+	],
+];

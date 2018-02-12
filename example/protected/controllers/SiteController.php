@@ -7,18 +7,18 @@ class SiteController extends Controller
 	 */
 	public function actions()
 	{
-		return array(
+		return [
 			// captcha action renders the CAPTCHA image displayed on the contact page
-			'captcha'=>array(
+			'captcha'=> [
 				'class'=>'CCaptchaAction',
 				'backColor'=>0xFFFFFF,
-			),
+			],
 			// page action renders "static" pages stored under 'protected/views/site/pages'
 			// They can be accessed via: index.php?r=site/page&view=FileName
-			'page'=>array(
+			'page'=> [
 				'class'=>'CViewAction',
-			),
-		);
+			],
+		];
 	}
 
 	/**
@@ -37,9 +37,9 @@ class SiteController extends Controller
 	 */
 	public function actionError()
 	{
-	    if($error=Yii::app()->errorHandler->error)
+	    if($error=EO::app()->errorHandler->error)
 	    {
-	    	if(Yii::app()->request->isAjaxRequest)
+	    	if(EO::app()->request->isAjaxRequest)
 	    		echo $error['message'];
 	    	else
 	        	$this->render('error', $error);
@@ -58,23 +58,23 @@ class SiteController extends Controller
 			if($model->validate())
 			{
 				//use 'contact' view from views/mail
-				$mail = new YiiMailer('contact', array('message' => $model->body, 'name' => $model->name, 'description' => 'Contact form'));
+				$mail = new YiiMailer('contact', ['message' => $model->body, 'name' => $model->name, 'description' => 'Contact form']);
 				
 				//set properties
 				$mail->setFrom($model->email, $model->name);
 				$mail->setSubject($model->subject);
-				$mail->setTo(Yii::app()->params['adminEmail']);
+				$mail->setTo(EO::app()->params['adminEmail']);
 				//send
 				if ($mail->send()) {
-					Yii::app()->user->setFlash('contact','Thank you for contacting us. We will respond to you as soon as possible.');
+					EO::app()->user->setFlash('contact','Thank you for contacting us. We will respond to you as soon as possible.');
 				} else {
-					Yii::app()->user->setFlash('error','Error while sending email: '.$mail->getError());
+					EO::app()->user->setFlash('error','Error while sending email: '.$mail->getError());
 				}
 				
 				$this->refresh();
 			}
 		}
-		$this->render('contact',array('model'=>$model));
+		$this->render('contact', ['model'=>$model]);
 	}
 
 	/**
@@ -88,7 +88,7 @@ class SiteController extends Controller
 		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
 		{
 			echo CActiveForm::validate($model);
-			Yii::app()->end();
+			EO::app()->end();
 		}
 
 		// collect user input data
@@ -97,10 +97,10 @@ class SiteController extends Controller
 			$model->attributes=$_POST['LoginForm'];
 			// validate user input and redirect to the previous page if valid
 			if($model->validate() && $model->login())
-				$this->redirect(Yii::app()->user->returnUrl);
+				$this->redirect(EO::app()->user->returnUrl);
 		}
 		// display the login form
-		$this->render('login',array('model'=>$model));
+		$this->render('login', ['model'=>$model]);
 	}
 
 	/**
@@ -108,7 +108,7 @@ class SiteController extends Controller
 	 */
 	public function actionLogout()
 	{
-		Yii::app()->user->logout();
-		$this->redirect(Yii::app()->homeUrl);
+		EO::app()->user->logout();
+		$this->redirect(EO::app()->homeUrl);
 	}
 }

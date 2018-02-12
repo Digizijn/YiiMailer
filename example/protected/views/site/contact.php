@@ -1,22 +1,22 @@
 <?
-$this->pageTitle=Yii::app()->name . ' - Contact Us';
-$this->breadcrumbs=array(
+$this->pageTitle=EO::app()->name . ' - Contact Us';
+$this->breadcrumbs= [
 	'Contact',
-);
+];
 ?>
 
 <h1>Contact Us</h1>
 
-<? if(Yii::app()->user->hasFlash('contact')): ?>
+<? if(EO::app()->user->hasFlash('contact')): ?>
 
 <div class="flash-success">
-	<?= Yii::app()->user->getFlash('contact'); ?>
+	<?= EO::app()->user->getFlash('contact'); ?>
 </div>
 
-<? elseif(Yii::app()->user->hasFlash('error')): ?>
+<? elseif(EO::app()->user->hasFlash('error')): ?>
 
 <div class="flash-error">
-	<?= Yii::app()->user->getFlash('error'); ?>
+	<?= EO::app()->user->getFlash('error'); ?>
 </div>
 
 <? else: ?>
@@ -27,13 +27,13 @@ If you have business inquiries or other questions, please fill out the following
 
 <div class="form">
 
-<? $form=$this->beginWidget('CActiveForm', array(
+<? $form=$this->beginWidget('CActiveForm', [
 	'id'=>'contact-form',
 	'enableClientValidation'=>true,
-	'clientOptions'=>array(
+	'clientOptions'=> [
 		'validateOnSubmit'=>true,
-	),
-)); ?>
+	],
+]); ?>
 
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
@@ -53,13 +53,13 @@ If you have business inquiries or other questions, please fill out the following
 
 	<div class="row">
 		<?= $form->labelEx($model,'subject'); ?>
-		<?= $form->textField($model,'subject',array('size'=>60,'maxlength'=>128)); ?>
+		<?= $form->textField($model,'subject', ['size'=>60,'maxlength'=>128]); ?>
 		<?= $form->error($model,'subject'); ?>
 	</div>
 
 	<div class="row">
 		<?= $form->labelEx($model,'body'); ?>
-		<?= $form->textArea($model,'body',array('rows'=>6, 'cols'=>50)); ?>
+		<?= $form->textArea($model,'body', ['rows'=>6, 'cols'=>50]); ?>
 		<?= $form->error($model,'body'); ?>
 	</div>
 

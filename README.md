@@ -40,7 +40,7 @@ $mail->setLayout('layoutName');
 Set the properties:
 <pre>
 $mail->setFrom('from@example.com', 'John Doe');
-$mail->setTo(Yii::app()->params['adminEmail']);
+$mail->setTo(EO::app()->params['adminEmail']);
 $mail->setSubject('Mail subject');
 </pre>
 You may use all PHPMailer properties you would usually use.
@@ -48,9 +48,9 @@ You may use all PHPMailer properties you would usually use.
 And finally send email(s):
 <pre>
 if ($mail->send()) {
-	Yii::app()->user->setFlash('contact','Thank you for contacting us. We will respond to you as soon as possible.');
+	EO::app()->user->setFlash('contact','Thank you for contacting us. We will respond to you as soon as possible.');
 } else {
-	Yii::app()->user->setFlash('error','Error while sending email: '.$mail->getError());
+	EO::app()->user->setFlash('error','Error while sending email: '.$mail->getError());
 }
 </pre>
 
@@ -61,7 +61,7 @@ You can send email without both the layout and view by using:
 $mail = new YiiMailer();
 //$mail->clearLayout();//if layout is already set in config
 $mail->setFrom('from@example.com', 'John Doe');
-$mail->setTo(Yii::app()->params['adminEmail']);
+$mail->setTo(EO::app()->params['adminEmail']);
 $mail->setSubject('Mail subject');
 $mail->setBody('Simple message');
 $mail->send();
